@@ -107,10 +107,10 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'database-doctodz',
+        'NAME': 'dbdjangooo',
         'USER': 'postgres',
         'PASSWORD': 'mohammed21061992mM',
-        'HOST': 'doctodzdb.cyz3wwfinmib.eu-west-3.rds.amazonaws.com',
+        'HOST': 'doctodz-db-teste.cyz3wwfinmib.eu-west-3.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
