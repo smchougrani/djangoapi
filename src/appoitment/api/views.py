@@ -8,15 +8,15 @@ from rest_framework.generics import ListAPIView
 
 
 
-class AppoitmentListView(ListAPIView):
-    model = Appointment
+
+class AppointmentListView(ListAPIView):
+    queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
 
-
-
     def get_queryset(self):
-        queryset = Appointment.objects.all()
-
+        queryset = super().get_queryset()
+        for appointment in queryset:
+            appointment.decrypt_fields()
         return queryset
 
 
