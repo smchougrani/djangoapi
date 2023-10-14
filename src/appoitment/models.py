@@ -3,6 +3,34 @@ from cryptography.fernet import Fernet
 
 
 
+
+
+
+
+
+
+class Medecin(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class DemandeSoin(models.Model):
+    description = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    medecin = models.ForeignKey(Medecin, on_delete=models.SET_NULL, null=True, blank=True)
+    is_accepted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Demande {self.id}: {self.description[:50]}..."
+
+
+
+
+
+
+
+
 class Appointment(models.Model):
     name = models.CharField(max_length=122, blank=True, null=True)
     time = models.CharField(max_length=122, blank=True, null=True)
