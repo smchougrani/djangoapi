@@ -1,24 +1,46 @@
-from appoitment.api.serializers import AppointmentSerializer
-from appoitment.models import Appointment
+from appoitment.models import Appointment, ModeleDocument, SaasEntreprise
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.generics import ListAPIView
-
-
-
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.http import JsonResponse
 from appoitment.models import DemandeSoin
 from django.views.decorators.csrf import csrf_exempt
 import time
+import requests
+import json
+
+from appoitment.api.serializers import AppointmentSerializer, ModeleDocumentSerializer
 
 
 
 # ExponentPushToken[rCcxM4B1mcbEU4U0Z-_3m4]
 # ExponentPushToken[G51o7KNBgdtqigqTLVMBSw]
 
-import requests
+
+
+
+class SaasEntrepriseDetailView(RetrieveAPIView):
+    queryset = ModeleDocument.objects.all()
+    serializer_class = ModeleDocumentSerializer
+    lookup_field = 'id'  # Assurez-vous que le champ de recherche est correct
+
+
+
+@csrf_exempt
+def submit_document(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        title = data.get('title', 'Untitled')
+        content = data.get('content', '')
+
+        print(title, content)
+        document = ModeleDocument.objects.create(title=title, content=content)
+        return JsonResponse({'message': 'Document created successfully', 'id': document.id})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
 
 
 

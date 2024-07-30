@@ -1,6 +1,34 @@
 from django.db import models
 from cryptography.fernet import Fernet
+from django.utils import timezone
 
+
+
+
+
+
+
+
+class ModeleDocument(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+
+
+class SaasEntreprise(models.Model):
+    name = models.CharField(max_length=200)
+    date_creation = models.DateTimeField(auto_now=True)
+    description = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=50, choices=[('actif', 'Actif'), ('maintenance', 'En maintenance')], default='actif')
+    features = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 
@@ -14,6 +42,10 @@ class Medecin(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+
+
 
 class DemandeSoin(models.Model):
     description = models.TextField()
